@@ -17,7 +17,7 @@ digraph sample {
 ```
 
 - Generated file
-  - TODO(sample.png)
+  - ![sample.png](https://raw.github.com/wiki/betahikaru/graphviz-sample/images/readme/sample.png)
 
 ## Require
 
