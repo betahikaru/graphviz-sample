@@ -1,0 +1,10 @@
+digraph G {
+  label="sysmtem component"
+  user;
+  web;
+  app;
+  mysql;
+  user -> web;
+  web -> app;
+  app -> mysql;
+}

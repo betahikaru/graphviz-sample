@@ -1,0 +1,18 @@
+digraph G {
+    graph [rankdir="LR"];
+    label = "Dropbox に bare リポジトリを置いて安心するの図";
+    local_repository [label = "作業用リポジトリ"];
+
+    subgraph cluster_Dropbox {
+        label = "Dropbox";
+        remote_repository [label = "bare リポジトリ"];
+
+        subgraph cluster_DropboxServer {
+            label = "Dropbox サーバー";
+            backup_repository [label = "バックアップ"];
+        }
+    }
+
+    local_repository -> remote_repository [label="push"];
+    remote_repository -> backup_repository [label="sync"];
+}

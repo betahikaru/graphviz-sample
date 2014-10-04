@@ -1,0 +1,3 @@
+graph route53 {
+  route53;
+}

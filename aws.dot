@@ -1,0 +1,27 @@
+#include "aws.inc"
+digraph {
+  rankdir=LR
+  A [shape=box regular=true margin=0 peripheries=0 image="awsicons/s3.png"]
+  //Route53 [_AWS_ROUTE53]
+  subgraph clusterR1 {
+    //_AWS_REGION("東京")
+	  //ELB [_AWS_ELB]
+	  subgraph clusterAZ1a {
+	    //_AWS_AZ("東京a")
+      //i1a [_AWS_INSTANCE label="Instanceア"]
+	  }
+	  subgraph clusterAZ1b {
+	    //_AWS_AZ("東京b")
+      //i1b [_AWS_INSTANCE label="Instanceイ"]
+	  }
+	  //RR [shape=oval style=dotted label="ラウンド\nロビン"]
+	  ELB -> RR -> {i1a i1b}
+  }
+  subgraph clusterR2 {
+    //_AWS_REGION("オレゴン州")
+	  //ELB [_AWS_ELB]
+    //s3 [_AWS_S3 label="Sorryページ\n(S3)"]
+  }
+  Route53 -> ELB [label="プライマリ"]
+  Route53 -> s3 [style=dashed label="セカンダリ"]
+}

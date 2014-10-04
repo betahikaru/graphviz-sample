@@ -1,0 +1,58 @@
+digraph G {
+  label="sysmtem component"
+  graph [ fontsize=8,fontname="MS Gothic" ];
+  node [ fontsize=8,fontname="MS Gothic",fontcoler=blue ];
+  edge [ fontsize=8,color="blue",fontcolor="blue",labefloat=flase ];
+  graph [ compound=true,overlap=prism ];
+  node [ shape=ellipse ];
+
+  // external node
+  user [ shape=egg, fillcolor=yellow, style="rounded,filled" ];
+  administrator [ shape=egg, fillcolor=yellow, style="rounded,filled" ];
+
+  // internal node
+  subgraph cluster_web {
+   fontcolor=red;
+   label="web";
+   web_httpd [ label="httpd" ];
+   web_php [ label="php" ];
+  }
+  subgraph cluster_app {
+   fontcolor=red;
+   label="app";
+   app_app [ label="app" ];
+  }
+  subgraph cluster_mail {
+   fontcolor=red;
+   label="mail";
+   mail_postfix [ label="postfix" ];
+  }
+  subgraph cluster_db {
+   fontcolor=red;
+   label="db";
+   db_mysql [ label="mysql"];
+  }
+  subgraph cluster_monitor {
+   fontcolor=red;
+   label="monitor";
+   monitor_httpd [ label="httpd"];
+   monitor_zabbix [ label="zabbix"];
+   monitor_mysql [ label="mysql" ];
+  }
+  subgraph cluster_gw{
+   fontcolor=red;
+   label="gw";
+   gw_sshd [ label="sshd" ];
+  }
+
+  // dependency
+  user -> web_httpd [ label="https" ];
+  user -> monitor_httpd [ label="https" ];
+  administrator -> gw_sshd [ label="ssh" ];
+  web_php -> app_app [ label="socket" ];
+  app_app -> mail_postfix [ label="smtp" ];
+  app_app -> db_mysql [ label="mysql" ];
+  monitor_zabbix -> mail_postfix [ label="smtp" ];
+  mail_postfix -> user [ label="mail" ];
+  mail_postfix -> administrator [ label="mail" ];
+}
